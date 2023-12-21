@@ -1,6 +1,6 @@
 from tkinter import *
 import tkinter as tk
-from geopy.geocoders import Nominatim
+from geopy.geocoders import Photon
 from tkinter import ttk,messagebox
 from timezonefinder import TimezoneFinder
 from datetime import datetime
@@ -15,38 +15,44 @@ root.resizable(False,False)
 
 
 def getWeather():
-    city=textfield.get()
+    try:
+        city=textfield.get()
     
-    geolocator=Nominatim(user_agent="geoapiExercises")
-    location=geolocator.geocode(city)
-    obj=TimezoneFinder()
+        geolocator=Photon(user_agent="geoapiExercises")
+        location=geolocator.geocode(city)
+        obj=TimezoneFinder()
     
-    result=obj.timezone_at(lng=location.longitude,lat=location.latitude)
+        result=obj.timezone_at(lng=location.longitude,lat=location.latitude)
 
-    home=pytz.timezone(result)
-    local_time=datetime.now(home)
-    current_time=local_time.strftime("%I:%M %p")
-    clock.config(text=current_time)
-    name.config(text="CURRENT WEATHER")
+        home=pytz.timezone(result)
+        local_time=datetime.now(home)
+        current_time=local_time.strftime("%I:%M %p")
+        clock.config(text=current_time)
+        name.config(text="Current Time")
     
-    # weather
-    api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=0093a72c975dfd0abc2d43dd629f209c"
-    json_data=requests.get(api).json()
-    condition=json_data['weather'][0]['main']
-    description=json_data['weather'][0]['descriptions']
-    temp=int(json_data['main']['temp']-273.15)
-    pressure=json_data['main']['pressure']
-    humidity=json_data['main']['humidity']
-    wind=json_data['wind']['speed']
-    
-    t.config(text=(temp, "°"))
-    c.config(text=(condition, "|", "FEELS", "LIKE", temp, "°"))
-    
-    w.config(text=wind)
-    h.config(text=humidity)
-    d.config(text=description)
-    p.config(text=pressure)
+        # weather
+        api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=0093a72c975dfd0abc2d43dd629f209c"
 
+        json_data=requests.get(api).json()
+        condition=json_data['weather'][0]['main']
+        description=json_data['weather'][0]['description']
+        temp=int(json_data['main']['temp']-273.15)
+        pressure=json_data['main']['pressure']
+        humidity=json_data['main']['humidity']
+        wind=json_data['wind']['speed']
+    
+        t.config(text=(temp,"°"))
+        c.config(text=(condition, "|", "Feels", "Like", temp, "°"))
+    
+        w.config(text=(wind,"kn"))
+        h.config(text=(humidity,"%"))
+        d.config(text=description)
+        p.config(text=(pressure,"mB"))
+
+    
+        
+    except Exception as e:
+        messagebox.showerror("Weather App:","Invalid Entry!!")
 
 # search box
 search_image=PhotoImage(file="images/search.png")
@@ -68,9 +74,9 @@ myimage_icon.place(x=420,y=34)
 
 
 # logo
-logo_image=PhotoImage(file="images/logo.png")
-logo=Label(image=logo_image)
-logo.place(x=250,y=100)
+logo_image=PhotoImage(file="images/icon_new.png")
+logo=Label(image=logo_image,bg="#ffffff")
+logo.place(x=300,y=100)
 
 
 # bottom box
@@ -80,58 +86,55 @@ frame_image.pack(padx=5,pady=5,side=BOTTOM)
 
 
 # time
-name=Label(root,font=("arial",15,"bold"))
-name.place(x=30,y=100)
-clock=Label(root,font=("Hevlvetica",20))
+name=Label(root,font=("Mukta",15,"bold"))
+name.place(x=35,y=105)
+# clock
+clock=Label(root,font=("Hevlvetica",25,"bold"))
 clock.place(x=30,y=140)
 
+
 # Label
-label1=Label(root,text="WIND",font=("Ubuntu",13,"bold"),fg="white",bg="#1ab5ef")
+label1=Label(root,text="WIND",font=("Ubuntu",13,"bold"),
+            fg="white",bg="#1ab5ef")
 label1.place(x=120,y=400)
 
-label2=Label(root,text="HUMIDITY",font=("Ubuntu",13,"bold"),fg="white",bg="#1ab5ef")
-label2.place(x=245,y=400)
+label2=Label(root,text="HUMIDITY",font=("Ubuntu",13,"bold"),
+            fg="white",bg="#1ab5ef")
+label2.place(x=255,y=400)
 
-label3=Label(root,text="DESCRIPTION",font=("Ubuntu",13,"bold"),fg="white",bg="#1ab5ef")
+label3=Label(root,text="DESCRIPTION",font=("Ubuntu",13,"bold"),
+            fg="white",bg="#1ab5ef")
 label3.place(x=430,y=400)
 
-label4 = Label(root, text="PRESSURE", font=("Ubuntu", 13, "bold"), fg="white", bg="#1ab5ef")
+label4 = Label(root, text="PRESSURE", font=("Ubuntu", 13, "bold"), 
+            fg="white", bg="#1ab5ef")
 label4.place(x=650, y=400)
 
-t=Label(font=("arial",70,"bold"),fg="#ee666d")
-t.place(x=400,y=150)
+# Corner Data
+t=Label(font=("arial",65,"bold"),fg="#ee666d")
+t.place(x=600,y=150)
 c=Label(font=("arial",15,"bold"))
-c.place(x=400,y=250)
+c.place(x=600,y=250)
 
 # Wind data
 w=Label(text="...",font=("Ubuntu",16,"bold"),bg="#1ab5ef")
-w.place(x=130,y=430)
+w.place(x=120,y=430)
 
 # Humidity data
 h=Label(text="...",font=("Ubuntu",16,"bold"),bg="#1ab5ef")
 h.place(x=265,y=430)
 
-# 
+# Description data
 d=Label(text="...",font=("Ubuntu",16,"bold"),bg="#1ab5ef")
-d.place(x=450,y=430)
-
+d.place(x=440,y=430)
 
 # Pressure data
 p = Label(text="...", font=("Ubuntu", 16, "bold"), bg="#1ab5ef")
-p.place(x=670, y=430)
+p.place(x=660, y=430)
 
 
-
-
-
-
-
-
-
-
-
-
-
+label11=Label(text="Created by: Debasish Ray")
+label11.pack(padx=1, pady=1)
 
 
 root.mainloop()
