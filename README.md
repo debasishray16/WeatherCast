@@ -2,7 +2,7 @@
 
 WeatherCast is a GUI-based application designed to display the latest information about climatic situations and factors like:
 
-1. THumidity(in percentage)
+1. Humidity(in percentage)
 2. Atmospheric Pressure (in mB)
 3. Description (about weather conditions)
 4. Wind Speed (in knots)
