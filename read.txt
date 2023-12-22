@@ -1,3 +1,0 @@
-pip install geopy
-pip install timezonefinder
-pip install pytz
