@@ -1,13 +1,13 @@
 # WeatherCast
 
-WeatherCast is GUI-based application designed to display latest information about climatic situations and factors like:
+WeatherCast is a GUI-based application designed to display the latest information about climatic situations and factors like:
 
-1. Temperature (in degree)
+1. Temperature (in degrees)
 2. Atmospheric Pressure (in mB)
-3. Description (about weather condition)
+3. Description (about weather conditions)
 4. Wind Speed (in knots)
 
-This application aims to provide life updates about climatic conditions based upon user-input. Even provides current date and time of place.
+This application aims to provide life updates about climatic conditions based on user input. It even provides the current date and time of place.
 
 ## Installation
 
