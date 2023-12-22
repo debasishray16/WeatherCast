@@ -79,4 +79,4 @@ def getWeather():
 
 ## Application Insights
 
-![Preview 1](https://github.com/debasishray16/WeatherCasr/blob/images/preview1.jpg?raw=true)
+![Preview 1](images/preview1.jpg)
